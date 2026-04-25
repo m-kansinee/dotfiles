@@ -1,0 +1,31 @@
+# ── Virtual environment ───────────────────────────────────
+.venv/
+venv/
+
+# ── uv ────────────────────────────────────────────────────
+.python-version
+# uv.lock: commit for apps (reproducible installs), exclude for libraries
+# uv.lock
+
+# ── Python cache ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ── Build / dist ──────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# ── Testing ───────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── Type checking ─────────────────────────────────────────
+.mypy_cache/
+.ruff_cache/

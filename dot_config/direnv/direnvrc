@@ -1,0 +1,48 @@
+# direnv stdlib extensions
+
+# layout uv — create/activate a uv-managed .venv in the project root
+# Respects .python-version if present.
+# Usage in .envrc: layout uv
+layout_uv() {
+    local python_version
+    python_version="$(cat .python-version 2>/dev/null)"
+
+    if [[ ! -d ".venv" ]]; then
+        log_status "creating virtualenv with uv"
+        if [[ -n "$python_version" ]]; then
+            uv venv --python "$python_version"
+        else
+            uv venv
+        fi
+    fi
+
+    VIRTUAL_ENV="$(pwd)/.venv"
+    PATH_add "$VIRTUAL_ENV/bin"
+    export VIRTUAL_ENV UV_ACTIVE=1
+}
+
+# use node — activate a specific Node version via fnm
+# Usage in .envrc: use node 20  OR  use node  (reads .node-version)
+use_node() {
+    local version="${1:-$(cat .node-version 2>/dev/null)}"
+    if [[ -z "$version" ]]; then
+        log_error "use node: no version specified and no .node-version found"
+        return 1
+    fi
+
+    local node_dir
+    node_dir="$(fnm exec --using="$version" -- node -e 'process.stdout.write(require("path").dirname(process.execPath))' 2>/dev/null)"
+
+    if [[ -z "$node_dir" ]]; then
+        log_status "Node $version not found, installing via fnm..."
+        fnm install "$version" >/dev/null 2>&1
+        node_dir="$(fnm exec --using="$version" -- node -e 'process.stdout.write(require("path").dirname(process.execPath))' 2>/dev/null)"
+        if [[ -z "$node_dir" ]]; then
+            log_error "use node: failed to resolve node $version after install"
+            return 1
+        fi
+    fi
+
+    PATH_add "$node_dir"
+    export NODE_VERSION="$version"
+}

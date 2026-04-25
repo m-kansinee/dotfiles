@@ -1,0 +1,28 @@
+# Chezmoi configuration
+# Docs: https://www.chezmoi.io/user-guide/reference/special-files-and-directories/chezmoi-toml/
+
+[data]
+  # OS-specific variables for templates
+  os = "{{ .chezmoi.os }}"
+  arch = "{{ .chezmoi.arch }}"
+  hostname = "{{ .chezmoi.hostname }}"
+
+{{- if eq .chezmoi.os "darwin" }}
+  # macOS (Apple Silicon)
+  homebrew_prefix = "/opt/homebrew"
+{{- else if eq .chezmoi.os "linux" }}
+  # Linux
+  homebrew_prefix = "/home/linuxbrew/.linuxbrew"
+{{- end }}
+
+# Don't prompt for changes
+[vimdiff]
+  command = "nvim"
+
+# Text editor for editing files
+[editor]
+  command = "nvim"
+
+# Color output
+[color]
+  ui = true
