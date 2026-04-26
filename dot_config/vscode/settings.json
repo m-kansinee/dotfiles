@@ -52,5 +52,4 @@
   "git.enableSmartCommit": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true
-  }
 }
