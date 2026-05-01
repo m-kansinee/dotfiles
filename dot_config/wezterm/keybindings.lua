@@ -71,7 +71,7 @@ local keys = {
 		end),
 	},
 	{
-		key = "u",
+		key = "phys:U",
 		mods = "CMD",
 		action = wezterm.action_callback(function(window, _)
 			local ov = window:get_config_overrides() or {}
