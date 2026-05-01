@@ -9,10 +9,13 @@ require("statusbar")
 -- WebGpu is recommended on macOS for best performance
 config.front_end = "WebGpu"
 config.max_fps = 60
-config.animation_fps = 30
+config.animation_fps = 60
+config.webgpu_power_preference = "HighPerformance"
 
 -- ── Font ──────────────────────────────────────────────────
-config.font = wezterm.font("Hack Nerd Font Mono")
+config.font = wezterm.font_with_fallback({ "Hack Nerd Font Mono", "Noto Sans Thai", "Noto Sans Thai Looped" })
+config.custom_block_glyphs = true
+config.freetype_load_target = "Light"
 config.font_size = 13.0
 
 -- ── Appearance ────────────────────────────────────────────
@@ -20,6 +23,7 @@ config.color_scheme = "Catppuccin Mocha"
 config.window_decorations = "RESIZE" -- add TITLE to restore macOS titlebar
 config.window_close_confirmation = "NeverPrompt"
 config.scrollback_lines = 10000
+config.cursor_blink_rate = 500
 config.default_cursor_style = "BlinkingBar"
 config.window_background_opacity = 1.0
 config.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
